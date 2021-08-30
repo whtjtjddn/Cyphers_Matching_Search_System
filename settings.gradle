@@ -1,0 +1,2 @@
+rootProject.name = "Cyphers_Matching_Search_System"
+include ':app'
