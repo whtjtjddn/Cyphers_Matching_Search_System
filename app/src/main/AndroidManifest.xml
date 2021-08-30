@@ -3,13 +3,15 @@
     package="com.example.cyphers_matching_search_system">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Cyphers_Matching_Search_System">
+        android:theme="@style/Theme.Cyphers_Matching_Search_System"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".MainActivity2"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
