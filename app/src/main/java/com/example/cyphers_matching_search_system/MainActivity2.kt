@@ -1,38 +1,33 @@
-package com.example.cyphers_matching_search_system;
+package com.example.cyphers_matching_search_system
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONObject
+import org.json.JSONArray
+import android.os.Bundle
+import com.example.cyphers_matching_search_system.R
+import android.content.Intent
+import android.view.View
+import android.widget.TextView
+import org.json.JSONException
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class MainActivity2 extends AppCompatActivity {
-    String nickname_string;
-    JSONObject match_string;
-    JSONArray match_array;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        Intent intent = getIntent();
-        String info_data = intent.getStringExtra("match_Json");
-        TextView nickname = (TextView)findViewById(R.id.main_2_nickname);
-
+class MainActivity2 : AppCompatActivity() {
+    var nickname_string: String? = null
+    var match_string: JSONObject? = null
+    var match_array: JSONArray? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main2)
+        val intent = intent
+        val info_data = intent.getStringExtra("match_Json")
+        val nickname = findViewById<View>(R.id.main_2_nickname) as TextView
         try {
-            JSONObject info = new JSONObject(info_data);
-            nickname_string = info.getString("nickname");
-            match_string = info.getJSONObject("matches");
-            match_array = match_string.getJSONArray("rows");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            val info = JSONObject(info_data)
+            nickname_string = info.getString("nickname")
+            val match_string = info.getJSONObject("matches")
+            match_array = match_string.getJSONArray("rows")
+        } catch (e: JSONException) {
+            e.printStackTrace()
         }
-
-
-        nickname.setText(nickname_string);
+        nickname.text = nickname_string
     }
 }
