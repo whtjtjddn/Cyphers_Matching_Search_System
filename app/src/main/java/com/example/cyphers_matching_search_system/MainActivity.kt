@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                     jsonObject1 = jsonId.getJSONObject(i)
                 }
                 Id = jsonObject1!!.getString("playerId")
-                taskUrl = String.format("https://api.neople.co.kr/cy/players/%s/matches?gameTypeId=<gameTypeId>&startDate=<startDate>&endDate=<endDate>&limit=<limit>&next=<next>&apikey=FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y", Id)
+                taskUrl = String.format("https://api.neople.co.kr/cy/players/%s/matches?gameTypeId=<gameTypeId>&startDate=2021/08/25&endDate=2021/09/01&limit=10&next=<next>&apikey=FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y", Id)
                 resultText1[0] = Task().execute().get()
             } catch (e: InterruptedException) {
                 e.printStackTrace()
