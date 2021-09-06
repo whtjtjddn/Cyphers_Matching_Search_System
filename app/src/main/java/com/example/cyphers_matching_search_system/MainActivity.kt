@@ -15,6 +15,8 @@ import com.example.cyphers_matching_search_system.MainActivity
 import org.json.JSONException
 import java.util.concurrent.ExecutionException
 
+import com.example.util.network.CypherseConnection
+
 class MainActivity : AppCompatActivity() {
     private var Nickname: String? = null
     private var jsonId: JSONArray? = null
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             Nickname = editText.text.toString()
             try {
+
+                CypherseConnection()
+
                 taskUrl = String.format("https://api.neople.co.kr/cy/players?nickname=%s&wordType=full&apikey=FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y", Nickname)
                 resultText[0] = Task().execute().get()
                 val jsonObject = JSONObject(resultText[0])
