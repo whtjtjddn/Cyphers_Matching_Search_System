@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 import android.util.Log
+import com.example.cyphers_matching_search_system.BuildConfig
 import com.example.util.network.responsePlayerInfo.ResponsePlayerInfo
 import com.example.util.network.responsePlayerInfoDetail.ResponsePlayerInfoDetail
 import com.example.util.network.responsePlayerMatchingHistory.ResponsePlayerMatchingHistory
@@ -67,7 +68,8 @@ public fun getCyphersConnector(): CyphersService{
 
 public fun CypherseConnection() {
     //TODO 나중에 숨겨야하는 데이터
-    val API_KEY =  "FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y"
+    val API_KEY = BuildConfig.NeopleAPIKey
+
     //TODO 동작 확인용 임시 데이터
     val playerNickname = "리바리바리바"
     val playerId = "e852fa7278e9e3eeea97bd3775dcd287"

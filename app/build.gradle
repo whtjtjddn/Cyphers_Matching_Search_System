@@ -7,6 +7,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    // local property 로드
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
     defaultConfig {
         applicationId "com.example.cyphers_matching_search_system"
         minSdkVersion 16
@@ -15,6 +19,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // local property 에서 api_key 추가
+        buildConfigField "String", "NeopleAPIKey", properties['NeopleAPIKey']
     }
 
     buildTypes {
