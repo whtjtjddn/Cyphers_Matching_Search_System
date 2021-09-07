@@ -5,15 +5,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 import android.util.Log
 import com.example.cyphers_matching_search_system.BuildConfig
+import com.example.util.network.responseBattleitemInfo.ResponseBattleitemInfo
+import com.example.util.network.responseBattleitemInfoDetail.ResponseBattleitemInfoDetail
+import com.example.util.network.responseBattleitemInfoDetailMulti.ResponseBattleitemInfoDetailMulti
+import com.example.util.network.responseCharacterInfo.ResponseCharacterInfo
 import com.example.util.network.responseCharacterRanking.ResponseCharacterRanking
 import com.example.util.network.responsePlayerInfo.ResponsePlayerInfo
 import com.example.util.network.responsePlayerInfoDetail.ResponsePlayerInfoDetail
 import com.example.util.network.responsePlayerMatchingHistory.ResponsePlayerMatchingHistory
 import com.example.util.network.responseMatchingInfo.ResponseMatchingInfo
+import com.example.util.network.responsePositionAttribute.ResponsePositionAttribute
 import com.example.util.network.responseTSJRanking.ResponseTSJRanking
 import com.example.util.network.responseTotalRanking.ResponseTotalRanking
 import java.util.*
@@ -21,6 +27,7 @@ import java.util.*
 private var retrofit: Retrofit = Retrofit
         .Builder()
         .baseUrl("https://api.neople.co.kr/cy/")
+        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build();
 
@@ -90,6 +97,43 @@ public interface CyphersService {
         @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = null,
     ): Call<ResponseTSJRanking>
+
+
+    @GET("battleitems")
+    fun getBattleitemInfo(
+        // TODO 'q= '파라미터 추가
+        @Query("itemName") itemName: String,
+        @Query("apikey") NeopleAPIKey: String,
+        @Query("wordType") wordType: String? = null,
+        @Query("offset") offset: Int? = null,
+        @Query("limit") limit: Int? = null,
+    ): Call<ResponseBattleitemInfo>
+
+
+    @GET("battleitems/{itemId}")
+    fun getBattleitemInfoDetail(
+        @Path("itemId") itemId: String,
+        @Query("apikey") NeopleAPIKey: String,
+    ): Call<ResponseBattleitemInfoDetail>
+
+
+    @GET("multi/battleitems/{itemId}")
+    fun getBattleitemInfoDetailMulti(
+        @Path("itemId") itemId: String,
+        @Query("apikey") NeopleAPIKey: String,
+    ): Call<ResponseBattleitemInfoDetailMulti>
+
+
+    @GET("characters")
+    fun getCharacterInfo(
+        @Query("apikey") NeopleAPIKey: String,
+    ): Call<ResponseCharacterInfo>
+
+    @GET("position-attributes/{attributeId}")
+    fun getPositionAttribute(
+        @Path("attributeId") attributeId: String,
+        @Query("apikey") NeopleAPIKey: String,
+    ): Call<ResponsePositionAttribute>
 }
 
 public fun getCyphersConnector(): CyphersService{
@@ -106,6 +150,10 @@ public fun CypherseConnection() {
     val playerId = "e852fa7278e9e3eeea97bd3775dcd287"
     val matchId = "9380a5e4267db146c49f71bb123096ee214eabae92b5c868e554b7374431e18b"
     val characterId = "d69971a6762d94340bb2332e8735238a" //휴톤
+    val itemName = "트리플 버스터"
+    val itemId = "777e72f2cd35f2f3e3d7788abb375738"
+    val itemId2 = "7d60f99dc8719456d531c5016217ad95"
+    val positionCode = "678bca255e575ae96aceefacaa7aee4e"
 
     val cyphersConnector = getCyphersConnector();
     val callGetPlayerInfo = cyphersConnector.getPlayerInfo(API_KEY, playerNickname, "match")
@@ -115,6 +163,11 @@ public fun CypherseConnection() {
     val callGetTotalRanking = cyphersConnector.getTotalRanking(API_KEY)
     val callGetCharacterRanking = cyphersConnector.getCharacterRanking(characterId, "winCount", API_KEY)
     val callGetTSJRanking = cyphersConnector.getTSJRanking("melee", API_KEY)
+    val callGetBattleitemInfo = cyphersConnector.getBattleitemInfo(itemName, API_KEY)
+    val callGetBattleitemInfoDetail = cyphersConnector.getBattleitemInfoDetail(itemId, API_KEY)
+    val callGetBattleitemInfoDetailMulti = cyphersConnector.getBattleitemInfoDetailMulti("$itemId,$itemId2", API_KEY)
+    val callGetCharacterInfo = cyphersConnector.getCharacterInfo(API_KEY)
+    val callGetPositionAttribute = cyphersConnector.getPositionAttribute(positionCode,API_KEY)
     val TAG = "riba"
 
     callGetPlayerInfo.enqueue(object : Callback<ResponsePlayerInfo> {
@@ -241,4 +294,89 @@ public fun CypherseConnection() {
         }
     })
 
+    callGetBattleitemInfo.enqueue(object : Callback<ResponseBattleitemInfo> {
+        override fun onResponse(
+            call: Call<ResponseBattleitemInfo>,
+            response: Response<ResponseBattleitemInfo>
+        ) {
+            Log.d(TAG, "아이템 정보 성공 : ${response.raw()}")
+            Log.d(TAG, "아이템 정보 내용물 : ${response.body()}")
+        }
+
+        override fun onFailure(
+            call: Call<ResponseBattleitemInfo>,
+            t: Throwable
+        ) {
+            Log.d(TAG, "아이템 정보 실패 : $t")
+        }
+    })
+
+
+    callGetBattleitemInfoDetail.enqueue(object : Callback<ResponseBattleitemInfoDetail> {
+        override fun onResponse(
+            call: Call<ResponseBattleitemInfoDetail>,
+            response: Response<ResponseBattleitemInfoDetail>
+        ) {
+            Log.d(TAG, "아이템 상세 정보 성공 : ${response.raw()}")
+            Log.d(TAG, "아이템 상세 정보 내용물 : ${response.body()}")
+        }
+
+        override fun onFailure(
+            call: Call<ResponseBattleitemInfoDetail>,
+            t: Throwable
+        ) {
+            Log.d(TAG, "아이템 상세 정보 실패 : $t")
+        }
+    })
+
+    callGetBattleitemInfoDetailMulti.enqueue(object : Callback<ResponseBattleitemInfoDetailMulti> {
+        override fun onResponse(
+            call: Call<ResponseBattleitemInfoDetailMulti>,
+            response: Response<ResponseBattleitemInfoDetailMulti>
+        ) {
+            Log.d(TAG, "아이템 다중 상세 정보 성공 : ${response.raw()}")
+            Log.d(TAG, "아이템 다중 상세 정보 내용물 : ${response.body()}")
+        }
+
+        override fun onFailure(
+            call: Call<ResponseBattleitemInfoDetailMulti>,
+            t: Throwable
+        ) {
+            Log.d(TAG, "아이템 다중 상세 정보 실패 : $t")
+        }
+    })
+
+    callGetCharacterInfo.enqueue(object : Callback<ResponseCharacterInfo> {
+        override fun onResponse(
+            call: Call<ResponseCharacterInfo>,
+            response: Response<ResponseCharacterInfo>
+        ) {
+            Log.d(TAG, "캐릭터 정보 성공 : ${response.raw()}")
+            Log.d(TAG, "캐릭터 정보 내용물 : ${response.body()}")
+        }
+
+        override fun onFailure(
+            call: Call<ResponseCharacterInfo>,
+            t: Throwable
+        ) {
+            Log.d(TAG, "캐릭터 정보 실패 : $t")
+        }
+    })
+
+    callGetPositionAttribute.enqueue(object : Callback<ResponsePositionAttribute> {
+        override fun onResponse(
+            call: Call<ResponsePositionAttribute>,
+            response: Response<ResponsePositionAttribute>
+        ) {
+            Log.d(TAG, "포지션 특성 성공 : ${response.raw()}")
+            Log.d(TAG, "포지션 특성 내용물 : ${response.body()}")
+        }
+
+        override fun onFailure(
+            call: Call<ResponsePositionAttribute>,
+            t: Throwable
+        ) {
+            Log.d(TAG, "포지션 특성 실패 : $t")
+        }
+    })
 }
