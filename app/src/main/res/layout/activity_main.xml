@@ -6,34 +6,136 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="닉네임을 입력해주세요."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401"/>
     <Button
-        android:id="@+id/searchMatchHistory_btn"
+        android:id="@+id/PlayerInfoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "전적 검색"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
-        android:id="@+id/matchHistory"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:text="플레이어"
+        app:layout_constraintBaseline_toBaselineOf="@+id/PlayerInfoDetailBtn"
+        app:layout_constraintEnd_toStartOf="@+id/PlayerInfoDetailBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/PlayerMatchingHistoryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.801"/>
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:text="플레이어매칭"
+        app:layout_constraintBaseline_toBaselineOf="@+id/PlayerInfoDetailBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PlayerInfoDetailBtn" />
+
+    <Button
+        android:id="@+id/MatchingInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="매칭상세정보"
+        app:layout_constraintBaseline_toBaselineOf="@+id/TotalRankingBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/PlayerInfoDetailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="플레이어상세"
+        app:layout_constraintEnd_toStartOf="@+id/PlayerMatchingHistoryBtn"
+        app:layout_constraintStart_toEndOf="@+id/PlayerInfoBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/TotalRankingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="27dp"
+        android:text="통합랭킹"
+        app:layout_constraintStart_toEndOf="@+id/MatchingInfoBtn"
+        app:layout_constraintTop_toBottomOf="@+id/PlayerInfoDetailBtn" />
+
+    <Button
+        android:id="@+id/CharacterRankingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:text="캐릭랭킹"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlayerMatchingHistoryBtn" />
+
+    <Button
+        android:id="@+id/TSJRankingBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:text="투신랭킹"
+        app:layout_constraintBaseline_toBaselineOf="@+id/BattleitemInfoBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/BattleitemInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:text="아이템검색"
+        app:layout_constraintBaseline_toBaselineOf="@+id/BattleitemInfoDetailBtn"
+        app:layout_constraintEnd_toStartOf="@+id/BattleitemInfoDetailBtn" />
+
+    <Button
+        android:id="@+id/BattleitemInfoDetailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:text="아이템상세"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CharacterRankingBtn" />
+
+    <Button
+        android:id="@+id/BattleitemInfoDetailMultiBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:text="다중아이템상세"
+        app:layout_constraintBaseline_toBaselineOf="@+id/CharacterInfoBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/CharacterInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:text="캐릭정보"
+        app:layout_constraintEnd_toEndOf="@+id/BattleitemInfoDetailBtn"
+        app:layout_constraintTop_toBottomOf="@+id/BattleitemInfoDetailBtn" />
+
+    <Button
+        android:id="@+id/PositionAttributeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="87dp"
+        android:layout_marginRight="87dp"
+        android:text="포지션특성"
+        app:layout_constraintEnd_toEndOf="@+id/CharacterInfoBtn"
+        app:layout_constraintStart_toStartOf="@+id/BattleitemInfoDetailMultiBtn"
+        app:layout_constraintTop_toBottomOf="@+id/CharacterInfoBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

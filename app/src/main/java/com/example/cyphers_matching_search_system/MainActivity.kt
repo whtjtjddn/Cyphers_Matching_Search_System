@@ -1,63 +1,81 @@
 package com.example.cyphers_matching_search_system
 
 import androidx.appcompat.app.AppCompatActivity
-import org.json.JSONArray
-import org.json.JSONObject
 import android.os.Bundle
-import com.example.cyphers_matching_search_system.R
-import android.content.Intent
 import android.view.View
-import android.widget.Button
-import com.example.cyphers_matching_search_system.MainActivity2
-import android.widget.EditText
-import android.widget.TextView
-import com.example.cyphers_matching_search_system.MainActivity
-import org.json.JSONException
-import java.util.concurrent.ExecutionException
 
-import com.example.util.network.CypherseConnection
+import com.example.util.network.*
 
 class MainActivity : AppCompatActivity() {
-    private var Nickname: String? = null
-    private var jsonId: JSONArray? = null
-    private var Id: String? = null
-    private var jsonObject1: JSONObject? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val intent = Intent(this@MainActivity, MainActivity2::class.java)
-        val editText = findViewById<View>(R.id.nickname) as EditText
-        val button = findViewById<View>(R.id.searchMatchHistory_btn) as Button
-        val textView = findViewById<View>(R.id.matchHistory) as TextView
-        val resultText = arrayOf<String?>(null)
-        val resultText1 = arrayOf<String?>(null)
-        button.setOnClickListener {
-            Nickname = editText.text.toString()
-            try {
 
-                CypherseConnection()
+        val cyphersConnector = getCyphersConnector()
 
-                taskUrl = String.format("https://api.neople.co.kr/cy/players?nickname=%s&wordType=full&apikey=FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y", Nickname)
-                resultText[0] = Task().execute().get()
-                val jsonObject = JSONObject(resultText[0])
-                val jsonId = jsonObject.getJSONArray("rows")
-                for (i in 0 until jsonId.length()) {
-                    jsonObject1 = jsonId.getJSONObject(i)
-                }
-                Id = jsonObject1!!.getString("playerId")
-                taskUrl = String.format("https://api.neople.co.kr/cy/players/%s/matches?gameTypeId=<gameTypeId>&startDate=<startDate>&endDate=<endDate>&limit=<limit>&next=<next>&apikey=FnaA38BJKLS69mQ9rDx6vEztIr8fbS3y", Id)
-                resultText1[0] = Task().execute().get()
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            } catch (e: ExecutionException) {
-                e.printStackTrace()
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-            textView.text = resultText1[0]
-            intent.putExtra("match_Json", resultText1[0])
-            startActivity(intent)
+        //TODO 동작 확인용 임시 데이터
+        val playerNickname = "리바리바리바"
+        val playerId = "e852fa7278e9e3eeea97bd3775dcd287"
+        val matchId = "9380a5e4267db146c49f71bb123096ee214eabae92b5c868e554b7374431e18b"
+        val characterId = "d69971a6762d94340bb2332e8735238a" //휴톤
+        val itemName = "트리플 버스터"
+        val itemId = "777e72f2cd35f2f3e3d7788abb375738"
+        val itemId2 = "7d60f99dc8719456d531c5016217ad95"
+        val positionCode = "678bca255e575ae96aceefacaa7aee4e"
+
+
+        val playerInfoBtn = findViewById<View>(R.id.PlayerInfoBtn)
+        val playerInfoDetailBtn = findViewById<View>(R.id.PlayerInfoDetailBtn)
+        val playerMatchingHistoryBtn = findViewById<View>(R.id.PlayerMatchingHistoryBtn)
+        val matchingInfoBtn = findViewById<View>(R.id.MatchingInfoBtn)
+        val totalRankingBtn = findViewById<View>(R.id.TotalRankingBtn)
+        val CharacterRankingBtn = findViewById<View>(R.id.CharacterRankingBtn)
+        val TSJRankingBtn = findViewById<View>(R.id.TSJRankingBtn)
+        val BattleitemInfoBtn = findViewById<View>(R.id.BattleitemInfoBtn)
+        val BattleitemInfoDetailBtn = findViewById<View>(R.id.BattleitemInfoDetailBtn)
+        val BattleitemInfoDetailMultiBtn = findViewById<View>(R.id.BattleitemInfoDetailMultiBtn)
+        val CharacterInfoBtn = findViewById<View>(R.id.CharacterInfoBtn)
+        val PositionAttributeBtn = findViewById<View>(R.id.PositionAttributeBtn)
+
+        playerInfoBtn.setOnClickListener{
+            getPlayerInfo(cyphersConnector, playerNickname)
         }
+        playerInfoDetailBtn.setOnClickListener{
+            getPlayerInfoDetail(cyphersConnector, playerId)
+        }
+        playerMatchingHistoryBtn.setOnClickListener{
+            getPlayerMatchingHistory(cyphersConnector, playerId)
+        }
+        matchingInfoBtn.setOnClickListener{
+            getMatchingInfo(cyphersConnector, matchId)
+        }
+        totalRankingBtn.setOnClickListener{
+            getTotalRanking(cyphersConnector)
+        }
+        CharacterRankingBtn.setOnClickListener{
+            getCharacterRanking(cyphersConnector, characterId)
+        }
+        TSJRankingBtn.setOnClickListener{
+            getTSJRanking(cyphersConnector)
+        }
+        BattleitemInfoBtn.setOnClickListener{
+            getBattleitemInfo(cyphersConnector, itemName)
+        }
+        BattleitemInfoDetailBtn.setOnClickListener{
+            getBattleitemInfoDetail(cyphersConnector, itemId)
+        }
+        BattleitemInfoDetailMultiBtn.setOnClickListener{
+            getBattleitemInfoDetailMulti(cyphersConnector, "$itemId,$itemId2")
+        }
+        CharacterInfoBtn.setOnClickListener{
+            getCharacterInfo(cyphersConnector)
+        }
+        PositionAttributeBtn.setOnClickListener{
+            getPositionAttribute(cyphersConnector, positionCode)
+        }
+
     }
 
     companion object {

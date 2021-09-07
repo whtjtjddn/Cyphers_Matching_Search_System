@@ -1,5 +1,7 @@
 package com.example.util.network
 
+import android.graphics.ColorSpace
+import android.provider.ContactsContract
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +25,7 @@ import com.example.util.network.responsePositionAttribute.ResponsePositionAttrib
 import com.example.util.network.responseTSJRanking.ResponseTSJRanking
 import com.example.util.network.responseTotalRanking.ResponseTotalRanking
 import java.util.*
+import kotlin.reflect.typeOf
 
 private var retrofit: Retrofit = Retrofit
         .Builder()
@@ -117,9 +120,9 @@ public interface CyphersService {
     ): Call<ResponseBattleitemInfoDetail>
 
 
-    @GET("multi/battleitems/{itemId}")
+    @GET("multi/battleitems")
     fun getBattleitemInfoDetailMulti(
-        @Path("itemId") itemId: String,
+        @Query("itemIds") itemId: String,
         @Query("apikey") NeopleAPIKey: String,
     ): Call<ResponseBattleitemInfoDetailMulti>
 
@@ -141,242 +144,275 @@ public fun getCyphersConnector(): CyphersService{
     return retrofit.create(CyphersService::class.java);
 }
 
-public fun CypherseConnection() {
-    //TODO 나중에 숨겨야하는 데이터
-    val API_KEY = BuildConfig.NeopleAPIKey
 
-    //TODO 동작 확인용 임시 데이터
-    val playerNickname = "리바리바리바"
-    val playerId = "e852fa7278e9e3eeea97bd3775dcd287"
-    val matchId = "9380a5e4267db146c49f71bb123096ee214eabae92b5c868e554b7374431e18b"
-    val characterId = "d69971a6762d94340bb2332e8735238a" //휴톤
-    val itemName = "트리플 버스터"
-    val itemId = "777e72f2cd35f2f3e3d7788abb375738"
-    val itemId2 = "7d60f99dc8719456d531c5016217ad95"
-    val positionCode = "678bca255e575ae96aceefacaa7aee4e"
+public fun getPlayerInfo(cyphersConnector: CyphersService, playerNickname: String, wordType: String? = null, limit: Int? = null){
 
-    val cyphersConnector = getCyphersConnector();
-    val callGetPlayerInfo = cyphersConnector.getPlayerInfo(API_KEY, playerNickname, "match")
-    val callGetPlayerInfoDetail = cyphersConnector.getPlayerInfoDetail(playerId, API_KEY)
-    val callGetPlayerMatchingHistory = cyphersConnector.getPlayerMatchingHistory(playerId, API_KEY)
-    val callGetMatchingInfo = cyphersConnector.getMatchingInfo(matchId, API_KEY)
-    val callGetTotalRanking = cyphersConnector.getTotalRanking(API_KEY)
-    val callGetCharacterRanking = cyphersConnector.getCharacterRanking(characterId, "winCount", API_KEY)
-    val callGetTSJRanking = cyphersConnector.getTSJRanking("melee", API_KEY)
-    val callGetBattleitemInfo = cyphersConnector.getBattleitemInfo(itemName, API_KEY)
-    val callGetBattleitemInfoDetail = cyphersConnector.getBattleitemInfoDetail(itemId, API_KEY)
-    val callGetBattleitemInfoDetailMulti = cyphersConnector.getBattleitemInfoDetailMulti("$itemId,$itemId2", API_KEY)
-    val callGetCharacterInfo = cyphersConnector.getCharacterInfo(API_KEY)
-    val callGetPositionAttribute = cyphersConnector.getPositionAttribute(positionCode,API_KEY)
-    val TAG = "riba"
+    val callGetPlayerInfo = cyphersConnector.getPlayerInfo(BuildConfig.NeopleAPIKey, playerNickname, wordType, limit)
 
     callGetPlayerInfo.enqueue(object : Callback<ResponsePlayerInfo> {
         override fun onResponse(
             call: Call<ResponsePlayerInfo>,
             response: Response<ResponsePlayerInfo>
         ) {
-            Log.d(TAG, "플레이어 검색 성공 : ${response.raw()}")
-            Log.d(TAG, "플레이어 검색 내용물 : ${response.body()}")
+            Log.d("riba", "플레이어 검색 성공 : ${response.raw()}")
+            Log.d("riba", "플레이어 검색 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponsePlayerInfo>,
             t: Throwable
         ) {
-            Log.d(TAG, "플레이어 검색 실패 : $t")
+            Log.d("riba", "플레이어 검색 실패 : $t")
         }
     })
 
+}
+
+public fun getPlayerInfoDetail(cyphersConnector: CyphersService, playerId: String){
+
+    val callGetPlayerInfoDetail = cyphersConnector.getPlayerInfoDetail(playerId, BuildConfig.NeopleAPIKey)
 
     callGetPlayerInfoDetail.enqueue(object : Callback<ResponsePlayerInfoDetail> {
         override fun onResponse(
             call: Call<ResponsePlayerInfoDetail>,
             response: Response<ResponsePlayerInfoDetail>
         ) {
-            Log.d(TAG, "플레이어 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "플레이어 정보 내용물 : ${response.body()}")
+            Log.d("riba", "플레이어 정보 성공 : ${response.raw()}")
+            Log.d("riba", "플레이어 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponsePlayerInfoDetail>,
             t: Throwable
         ) {
-            Log.d(TAG, "플레이어 정보 실패 : $t")
+            Log.d("riba", "플레이어 정보 실패 : $t")
         }
     })
+}
 
+public fun getPlayerMatchingHistory(cyphersConnector: CyphersService, playerId: String){
+
+
+    val callGetPlayerMatchingHistory = cyphersConnector.getPlayerMatchingHistory(playerId, BuildConfig.NeopleAPIKey)
 
     callGetPlayerMatchingHistory.enqueue(object : Callback<ResponsePlayerMatchingHistory> {
         override fun onResponse(
             call: Call<ResponsePlayerMatchingHistory>,
             response: Response<ResponsePlayerMatchingHistory>
         ) {
-            Log.d(TAG, "플레이어 매칭정보 성공 : ${response.raw()}")
-            Log.d(TAG, "플레이어 매칭정보 내용물 : ${response.body()}")
+            Log.d("riba", "플레이어 매칭정보 성공 : ${response.raw()}")
+            Log.d("riba", "플레이어 매칭정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponsePlayerMatchingHistory>,
             t: Throwable
         ) {
-            Log.d(TAG, "플레이어 매칭정보 실패 : $t")
+            Log.d("riba", "플레이어 매칭정보 실패 : $t")
         }
     })
+}
 
+public fun getMatchingInfo(cyphersConnector: CyphersService, matchId: String){
 
+    val callGetMatchingInfo = cyphersConnector.getMatchingInfo(matchId, BuildConfig.NeopleAPIKey)
 
     callGetMatchingInfo.enqueue(object : Callback<ResponseMatchingInfo> {
         override fun onResponse(
             call: Call<ResponseMatchingInfo>,
             response: Response<ResponseMatchingInfo>
         ) {
-            Log.d(TAG, "매칭 상세 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "매칭 상세 정보 내용물 : ${response.body()}")
+            Log.d("riba", "매칭 상세 정보 성공 : ${response.raw()}")
+            Log.d("riba", "매칭 상세 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseMatchingInfo>,
             t: Throwable
         ) {
-            Log.d(TAG, "매칭 상세 정보 실패 : $t")
+            Log.d("riba", "매칭 상세 정보 실패 : $t")
         }
     })
+}
+
+public fun getTotalRanking(cyphersConnector: CyphersService){
+
+    val callGetTotalRanking = cyphersConnector.getTotalRanking(BuildConfig.NeopleAPIKey)
 
     callGetTotalRanking.enqueue(object : Callback<ResponseTotalRanking> {
         override fun onResponse(
             call: Call<ResponseTotalRanking>,
             response: Response<ResponseTotalRanking>
         ) {
-            Log.d(TAG, "통합 랭킹 성공 : ${response.raw()}")
-            Log.d(TAG, "통합 랭킹 내용물 : ${response.body()}")
+            Log.d("riba", "통합 랭킹 성공 : ${response.raw()}")
+            Log.d("riba", "통합 랭킹 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseTotalRanking>,
             t: Throwable
         ) {
-            Log.d(TAG, "통합 랭킹 실패 : $t")
+            Log.d("riba", "통합 랭킹 실패 : $t")
         }
     })
+
+}
+
+
+public fun getCharacterRanking(cyphersConnector: CyphersService, characterId : String){
+
+    val callGetCharacterRanking = cyphersConnector.getCharacterRanking(characterId, "winCount", BuildConfig.NeopleAPIKey)
 
     callGetCharacterRanking.enqueue(object : Callback<ResponseCharacterRanking> {
         override fun onResponse(
             call: Call<ResponseCharacterRanking>,
             response: Response<ResponseCharacterRanking>
         ) {
-            Log.d(TAG, "캐릭터 랭킹 성공 : ${response.raw()}")
-            Log.d(TAG, "캐릭터 랭킹 내용물 : ${response.body()}")
+            Log.d("riba", "캐릭터 랭킹 성공 : ${response.raw()}")
+            Log.d("riba", "캐릭터 랭킹 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseCharacterRanking>,
             t: Throwable
         ) {
-            Log.d(TAG, "캐릭터 랭킹 실패 : $t")
+            Log.d("riba", "캐릭터 랭킹 실패 : $t")
         }
     })
+}
 
+public fun getTSJRanking(cyphersConnector: CyphersService){
+
+    val callGetTSJRanking = cyphersConnector.getTSJRanking("melee", BuildConfig.NeopleAPIKey)
 
     callGetTSJRanking.enqueue(object : Callback<ResponseTSJRanking> {
         override fun onResponse(
             call: Call<ResponseTSJRanking>,
             response: Response<ResponseTSJRanking>
         ) {
-            Log.d(TAG, "투신전 랭킹 성공 : ${response.raw()}")
-            Log.d(TAG, "투신전 랭킹 내용물 : ${response.body()}")
+            Log.d("riba", "투신전 랭킹 성공 : ${response.raw()}")
+            Log.d("riba", "투신전 랭킹 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseTSJRanking>,
             t: Throwable
         ) {
-            Log.d(TAG, "투신전 랭킹 실패 : $t")
+            Log.d("riba", "투신전 랭킹 실패 : $t")
         }
     })
+}
+
+public fun getBattleitemInfo(cyphersConnector: CyphersService, itemName: String){
+
+    val callGetBattleitemInfo = cyphersConnector.getBattleitemInfo(itemName, BuildConfig.NeopleAPIKey)
 
     callGetBattleitemInfo.enqueue(object : Callback<ResponseBattleitemInfo> {
         override fun onResponse(
             call: Call<ResponseBattleitemInfo>,
             response: Response<ResponseBattleitemInfo>
         ) {
-            Log.d(TAG, "아이템 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "아이템 정보 내용물 : ${response.body()}")
+            Log.d("riba", "아이템 정보 성공 : ${response.raw()}")
+            Log.d("riba", "아이템 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseBattleitemInfo>,
             t: Throwable
         ) {
-            Log.d(TAG, "아이템 정보 실패 : $t")
+            Log.d("riba", "아이템 정보 실패 : $t")
         }
     })
 
+}
+
+public fun getBattleitemInfoDetail(cyphersConnector: CyphersService, itemId: String){
+
+    val callGetBattleitemInfoDetail = cyphersConnector.getBattleitemInfoDetail(itemId, BuildConfig.NeopleAPIKey)
 
     callGetBattleitemInfoDetail.enqueue(object : Callback<ResponseBattleitemInfoDetail> {
         override fun onResponse(
             call: Call<ResponseBattleitemInfoDetail>,
             response: Response<ResponseBattleitemInfoDetail>
         ) {
-            Log.d(TAG, "아이템 상세 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "아이템 상세 정보 내용물 : ${response.body()}")
+            Log.d("riba", "아이템 상세 정보 성공 : ${response.raw()}")
+            Log.d("riba", "아이템 상세 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseBattleitemInfoDetail>,
             t: Throwable
         ) {
-            Log.d(TAG, "아이템 상세 정보 실패 : $t")
+            Log.d("riba", "아이템 상세 정보 실패 : $t")
         }
     })
+
+}
+
+public fun getBattleitemInfoDetailMulti(cyphersConnector: CyphersService, itemIdMulti: String){
+
+    val callGetBattleitemInfoDetailMulti = cyphersConnector.getBattleitemInfoDetailMulti(itemIdMulti, BuildConfig.NeopleAPIKey)
 
     callGetBattleitemInfoDetailMulti.enqueue(object : Callback<ResponseBattleitemInfoDetailMulti> {
         override fun onResponse(
             call: Call<ResponseBattleitemInfoDetailMulti>,
             response: Response<ResponseBattleitemInfoDetailMulti>
         ) {
-            Log.d(TAG, "아이템 다중 상세 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "아이템 다중 상세 정보 내용물 : ${response.body()}")
+            Log.d("riba", "아이템 다중 상세 정보 성공 : ${response.raw()}")
+            Log.d("riba", "아이템 다중 상세 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseBattleitemInfoDetailMulti>,
             t: Throwable
         ) {
-            Log.d(TAG, "아이템 다중 상세 정보 실패 : $t")
+            Log.d("riba", "아이템 다중 상세 정보 실패 : $t")
         }
     })
+
+}
+
+public fun getCharacterInfo(cyphersConnector: CyphersService){
+    val callGetCharacterInfo = cyphersConnector.getCharacterInfo(BuildConfig.NeopleAPIKey)
+
 
     callGetCharacterInfo.enqueue(object : Callback<ResponseCharacterInfo> {
         override fun onResponse(
             call: Call<ResponseCharacterInfo>,
             response: Response<ResponseCharacterInfo>
         ) {
-            Log.d(TAG, "캐릭터 정보 성공 : ${response.raw()}")
-            Log.d(TAG, "캐릭터 정보 내용물 : ${response.body()}")
+            Log.d("riba", "캐릭터 정보 성공 : ${response.raw()}")
+            Log.d("riba", "캐릭터 정보 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponseCharacterInfo>,
             t: Throwable
         ) {
-            Log.d(TAG, "캐릭터 정보 실패 : $t")
+            Log.d("riba", "캐릭터 정보 실패 : $t")
         }
     })
+}
+
+public  fun getPositionAttribute(cyphersConnector: CyphersService, positionCode : String){
+
+    val callGetPositionAttribute = cyphersConnector.getPositionAttribute(positionCode,BuildConfig.NeopleAPIKey)
 
     callGetPositionAttribute.enqueue(object : Callback<ResponsePositionAttribute> {
         override fun onResponse(
             call: Call<ResponsePositionAttribute>,
             response: Response<ResponsePositionAttribute>
         ) {
-            Log.d(TAG, "포지션 특성 성공 : ${response.raw()}")
-            Log.d(TAG, "포지션 특성 내용물 : ${response.body()}")
+            Log.d("riba", "포지션 특성 성공 : ${response.raw()}")
+            Log.d("riba", "포지션 특성 내용물 : ${response.body()}")
         }
 
         override fun onFailure(
             call: Call<ResponsePositionAttribute>,
             t: Throwable
         ) {
-            Log.d(TAG, "포지션 특성 실패 : $t")
+            Log.d("riba", "포지션 특성 실패 : $t")
         }
     })
+
 }
