@@ -1,12 +1,25 @@
 package com.example.cyphers_matching_search_system
 
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.*
+import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 
 import com.example.util.network.*
+import com.example.util.network.responsePlayerInfo.ResponsePlayerInfo
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -24,7 +37,8 @@ class MainActivity : AppCompatActivity() {
         val itemId = "777e72f2cd35f2f3e3d7788abb375738"
         val itemId2 = "7d60f99dc8719456d531c5016217ad95"
         val positionCode = "678bca255e575ae96aceefacaa7aee4e"
-
+        val wordType = null
+        val limit = null
 
         val playerInfoBtn = findViewById<View>(R.id.PlayerInfoBtn)
         val playerInfoDetailBtn = findViewById<View>(R.id.PlayerInfoDetailBtn)
@@ -38,9 +52,29 @@ class MainActivity : AppCompatActivity() {
         val BattleitemInfoDetailMultiBtn = findViewById<View>(R.id.BattleitemInfoDetailMultiBtn)
         val CharacterInfoBtn = findViewById<View>(R.id.CharacterInfoBtn)
         val PositionAttributeBtn = findViewById<View>(R.id.PositionAttributeBtn)
+        val testing = findViewById<View>(R.id.test_text) as TextView
 
         playerInfoBtn.setOnClickListener{
-            getPlayerInfo(cyphersConnector, playerNickname)
+            val callGetPlayerInfo = cyphersConnector.getPlayerInfo(BuildConfig.NeopleAPIKey, playerNickname, wordType, limit)
+
+            callGetPlayerInfo.enqueue(object : Callback<ResponsePlayerInfo> {
+                override fun onResponse(
+                    call: Call<ResponsePlayerInfo>,
+                    response: Response<ResponsePlayerInfo>
+                ) {
+                    Log.d("riba", "플레이어 검색 성공 : ${response.raw()}")
+                    Log.d("riba", "플레이어 검색 내용물 : ${response.body()}")
+                    testing.setText(response.body().toString())
+                }
+
+                override fun onFailure(
+                    call: Call<ResponsePlayerInfo>,
+                    t: Throwable
+                ) {
+                    Log.d("riba", "플레이어 검색 실패 : $t")
+                }
+            })
+            //getPlayerInfo(cyphersConnector, playerNickname)
         }
         playerInfoDetailBtn.setOnClickListener{
             getPlayerInfoDetail(cyphersConnector, playerId)
