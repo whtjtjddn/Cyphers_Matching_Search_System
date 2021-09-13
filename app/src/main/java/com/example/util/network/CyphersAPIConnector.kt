@@ -43,7 +43,7 @@ public interface CyphersService {
     fun getPlayerInfo(
             @Query("apikey") NeopleAPIKey: String,
             @Query("nickname") nickname: String,
-            @Query("wordType") wordType: String?,
+            @Query("wordType") wordType: String? = null,
             @Query("limit") limit: Int? = null,
     ): Call<ResponsePlayerInfo>
 
@@ -145,28 +145,6 @@ public fun getCyphersConnector(): CyphersService{
 }
 
 
-public fun getPlayerInfo(cyphersConnector: CyphersService, playerNickname: String, wordType: String? = null, limit: Int? = null){
-
-    val callGetPlayerInfo = cyphersConnector.getPlayerInfo(BuildConfig.NeopleAPIKey, playerNickname, wordType, limit)
-
-    callGetPlayerInfo.enqueue(object : Callback<ResponsePlayerInfo> {
-        override fun onResponse(
-            call: Call<ResponsePlayerInfo>,
-            response: Response<ResponsePlayerInfo>
-        ) {
-            Log.d("riba", "플레이어 검색 성공 : ${response.raw()}")
-            Log.d("riba", "플레이어 검색 내용물 : ${response.body()}")
-        }
-
-        override fun onFailure(
-            call: Call<ResponsePlayerInfo>,
-            t: Throwable
-        ) {
-            Log.d("riba", "플레이어 검색 실패 : $t")
-        }
-    })
-
-}
 
 public fun getPlayerInfoDetail(cyphersConnector: CyphersService, playerId: String){
 
