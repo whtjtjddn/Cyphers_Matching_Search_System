@@ -1,8 +1,11 @@
-package com.example.cyphers_matching_search_system
+package com.example.cyphers_matching_search_system.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.cyphers_matching_search_system.playerSearch.PlayerSearchActivity
+import com.example.cyphers_matching_search_system.R
 
 import com.example.util.network.*
 
@@ -40,7 +43,8 @@ class MainActivity : AppCompatActivity() {
         val PositionAttributeBtn = findViewById<View>(R.id.PositionAttributeBtn)
 
         playerInfoBtn.setOnClickListener{
-            getPlayerInfo(cyphersConnector, playerNickname)
+            val playerSerchActivity = Intent(this, PlayerSearchActivity::class.java)
+            startActivity(playerSerchActivity)
         }
         playerInfoDetailBtn.setOnClickListener{
             getPlayerInfoDetail(cyphersConnector, playerId)

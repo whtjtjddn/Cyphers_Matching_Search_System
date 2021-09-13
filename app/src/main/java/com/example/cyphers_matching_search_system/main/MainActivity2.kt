@@ -1,11 +1,10 @@
-package com.example.cyphers_matching_search_system
+package com.example.cyphers_matching_search_system.main
 
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
 import org.json.JSONArray
 import android.os.Bundle
 import com.example.cyphers_matching_search_system.R
-import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import org.json.JSONException
