@@ -137,5 +137,11 @@
         app:layout_constraintEnd_toEndOf="@+id/CharacterInfoBtn"
         app:layout_constraintStart_toStartOf="@+id/BattleitemInfoDetailMultiBtn"
         app:layout_constraintTop_toBottomOf="@+id/CharacterInfoBtn" />
-
+    <TextView
+        android:id="@+id/test_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textSize="50dp"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
