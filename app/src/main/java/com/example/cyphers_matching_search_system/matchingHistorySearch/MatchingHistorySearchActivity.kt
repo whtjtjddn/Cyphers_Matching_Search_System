@@ -21,15 +21,6 @@ class MatchingHistorySearchActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMatchingHistorySearchBinding>(this, R.layout.activity_matching_history_search)
         binding.data = viewModel
 
-        val searchBtn = findViewById<View>(R.id.SearchBtn)
-        val info = findViewById<View>(R.id.Result)
-
-        val intent = Intent(this, MainActivity2::class.java)
-
-        searchBtn.setOnClickListener {
-            intent.putExtra("info",info.get().toString())
-            startActivity(intent)
-        }
 
     }
 

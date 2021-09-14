@@ -9,16 +9,20 @@ import com.example.cyphers_matching_search_system.matchingHistorySearch.Matching
 class MatchingHistorySearchViewModel: ViewModel() {
 
     var repository : MatchingHistorySearchRepository = MatchingHistorySearchRepository()
-    var _playerId = ObservableField<String>()
-    var _playerMatchingInfo = ObservableField<String>()
-
+    var _playerId = "e852fa7278e9e3eeea97bd3775dcd287"
+    var _playerGrade = ObservableField<String>()
+    var _playerClan = ObservableField<String>()
+    var _playerTier = ObservableField<String>()
     fun search(){
-        val playerNickname = _playerId.get().toString()
+        val playerNickname = _playerId
         repository.getPlayerMatchingHistory(playerNickname,
             {
-                _playerMatchingInfo.set(it.toString())}
+                _playerClan.set("클랜명 : " + it.clanName.toString())
+                _playerGrade.set(it.grade.toString() + "급  " + it.nickname.toString())
+                _playerTier.set(it.ratingPoint.toString() + "\n" + it.tierName.toString())
+            }
         ) { _, t ->
-            run { _playerMatchingInfo.set("error:" + t.message) }
+            run { _playerGrade.set("error:" + t.message) }
         }
 
 
