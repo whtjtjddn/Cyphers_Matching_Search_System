@@ -22,14 +22,20 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         val intent = intent
-        val info_data = intent.getStringExtra("match_Json")
+        val info_data = intent.getStringExtra("player_Info")
         val nickname = findViewById<View>(R.id.main_2_nickname) as TextView
         val grade = findViewById<View>(R.id.main_2_grade) as TextView
         val clan = findViewById<View>(R.id.main_2_clan) as TextView
         val rating = findViewById<View>(R.id.main_2_raitingPoint) as TextView
         val tier = findViewById<View>(R.id. main_2_Tier) as TextView
         val matches = findViewById<View>(R.id.main_2_matches) as TextView
-        try {
+
+
+
+
+
+
+        /*try {
             val info = JSONObject(info_data)
             nickname_string = info.getString("nickname")
             grade_string = info.getString("grade") + "급"
@@ -47,13 +53,13 @@ class MainActivity2 : AppCompatActivity() {
             }*/
         } catch (e: JSONException) {
             e.printStackTrace()
-        }
-        nickname.text = nickname_string
-        grade.text = grade_string
-        clan.text = clan_string
-        rating.text = raiting_string
-        tier.text = tier_string
-        matches.text = matches_string
+        }*/
+        nickname.text = info_data
+ //       grade.text = grade_string
+ //       clan.text = clan_string
+  //      rating.text = raiting_string
+   //     tier.text = tier_string
+    //    matches.text = matches_string
 
     }
 }

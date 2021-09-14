@@ -17,6 +17,7 @@ import android.widget.TextView
 
 import com.example.util.network.*
 import com.example.util.network.responsePlayerInfo.ResponsePlayerInfo
+import com.example.util.network.responsePlayerMatchingHistory.ResponsePlayerMatchingHistory
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val player_info_intent = Intent(this, MainActivity2::class.java)
 
         val cyphersConnector = getCyphersConnector()
 
@@ -55,23 +57,27 @@ class MainActivity : AppCompatActivity() {
         val testing = findViewById<View>(R.id.test_text) as TextView
 
         playerInfoBtn.setOnClickListener{
-            val callGetPlayerInfo = cyphersConnector.getPlayerInfo(BuildConfig.NeopleAPIKey, playerNickname, wordType, limit)
+            val callGetPlayerMatchingHistory = cyphersConnector.getPlayerMatchingHistory(playerId, BuildConfig.NeopleAPIKey)
 
-            callGetPlayerInfo.enqueue(object : Callback<ResponsePlayerInfo> {
+            callGetPlayerMatchingHistory.enqueue(object : Callback<ResponsePlayerMatchingHistory> {
                 override fun onResponse(
-                    call: Call<ResponsePlayerInfo>,
-                    response: Response<ResponsePlayerInfo>
+                    call: Call<ResponsePlayerMatchingHistory>,
+                    response: Response<ResponsePlayerMatchingHistory>
                 ) {
-                    Log.d("riba", "플레이어 검색 성공 : ${response.raw()}")
-                    Log.d("riba", "플레이어 검색 내용물 : ${response.body()}")
-                    testing.setText(response.body().toString())
+                    response.body()?.let{
+                        val nickname = it.nickname
+                        player_info_intent.putExtra("player_Info",nickname.toString())
+                    }
+
+
+                    startActivity(player_info_intent)
                 }
 
                 override fun onFailure(
-                    call: Call<ResponsePlayerInfo>,
+                    call: Call<ResponsePlayerMatchingHistory>,
                     t: Throwable
                 ) {
-                    Log.d("riba", "플레이어 검색 실패 : $t")
+                    Log.d("riba", "플레이어 매칭정보 실패 : $t")
                 }
             })
             //getPlayerInfo(cyphersConnector, playerNickname)
