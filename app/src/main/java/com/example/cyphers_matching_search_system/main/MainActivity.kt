@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.cyphers_matching_search_system.playerSearch.PlayerSearchActivity
 import com.example.cyphers_matching_search_system.R
+import com.example.cyphers_matching_search_system.matchingHistorySearch.MatchingHistorySearchActivity
 
 import com.example.util.network.*
 
@@ -50,7 +51,8 @@ class MainActivity : AppCompatActivity() {
             getPlayerInfoDetail(cyphersConnector, playerId)
         }
         playerMatchingHistoryBtn.setOnClickListener{
-            getPlayerMatchingHistory(cyphersConnector, playerId)
+            val playerMatchingHistorySearchActivity = Intent(this, MatchingHistorySearchActivity::class.java)
+            startActivity(playerMatchingHistorySearchActivity)
         }
         matchingInfoBtn.setOnClickListener{
             getMatchingInfo(cyphersConnector, matchId)
