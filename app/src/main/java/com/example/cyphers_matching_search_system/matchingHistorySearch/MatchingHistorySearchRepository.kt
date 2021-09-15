@@ -37,5 +37,31 @@ class MatchingHistorySearchRepository {
         })
     }
 
+    fun getPlayerInfo(playerNickname: String,
+                      success: (ResponsePlayerInfo) -> Unit,
+                      error: (Call<ResponsePlayerInfo>, Throwable) -> Unit){
+
+        val cyphersConnector = getCyphersConnector()
+        val callGetPlayerInfo = cyphersConnector.getPlayerInfo(BuildConfig.NeopleAPIKey, playerNickname)
+
+        callGetPlayerInfo.enqueue(object :Callback<ResponsePlayerInfo>{
+            override fun onResponse(
+                call: Call<ResponsePlayerInfo>,
+                response: Response<ResponsePlayerInfo>
+            ) {
+                val data = response.body()
+                data?.let { success(data) }
+            }
+
+            override fun onFailure(
+                call: Call<ResponsePlayerInfo>,
+                t: Throwable
+            ) {
+                error(callGetPlayerInfo, t)
+            }
+        })
+
+    }
+
 }
 
