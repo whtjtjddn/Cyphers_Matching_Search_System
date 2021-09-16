@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.cyphers_matching_search_system.playerSearch.PlayerSearchActivity
 import com.example.cyphers_matching_search_system.R
+import com.example.cyphers_matching_search_system.battleitemInfo.BattleitemInfoActivity
 
 import com.example.util.network.*
 
@@ -65,7 +66,8 @@ class MainActivity : AppCompatActivity() {
             getTSJRanking(cyphersConnector)
         }
         BattleitemInfoBtn.setOnClickListener{
-            getBattleitemInfo(cyphersConnector, itemName)
+            val battleitemInfoActivity = Intent(this, BattleitemInfoActivity::class.java)
+            startActivity(battleitemInfoActivity)
         }
         BattleitemInfoDetailBtn.setOnClickListener{
             getBattleitemInfoDetail(cyphersConnector, itemId)
