@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.cyphers_matching_search_system.battleitemInfo.BattleitemAdapter.BattleitemViewHolder" />
+            type="com.example.cyphers_matching_search_system.battleitemInfo.BattleitemData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -33,7 +33,7 @@
             android:layout_marginEnd="54dp"
             android:layout_marginRight="54dp"
             android:layout_marginBottom="14dp"
-            android:text="@{data._battleitemName}"
+            android:text="@{data.itemName}"
             app:layout_constraintBottom_toBottomOf="@+id/battleitemImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/battleitemImage"

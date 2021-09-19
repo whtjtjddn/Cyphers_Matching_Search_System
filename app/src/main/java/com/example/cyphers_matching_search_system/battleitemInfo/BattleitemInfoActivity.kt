@@ -3,7 +3,6 @@ package com.example.cyphers_matching_search_system.battleitemInfo
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cyphers_matching_search_system.R
@@ -12,7 +11,15 @@ import com.example.cyphers_matching_search_system.databinding.ActivityBattleitem
 class BattleitemInfoActivity : AppCompatActivity() {
 
     private val viewModel: BattleitemInfoViewModel by viewModels()
-    private val battleitemDataList =  arrayListOf<BattleitemData>(BattleitemData("ch","d","d","d","d","d","d","d","d","dd"))
+    private val battleitemDataList =  arrayListOf<BattleitemData>(
+        BattleitemData("1"),
+        BattleitemData("2"),
+        BattleitemData("3"),
+        BattleitemData("4"),
+        BattleitemData("5"),
+        BattleitemData("6"),
+
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
