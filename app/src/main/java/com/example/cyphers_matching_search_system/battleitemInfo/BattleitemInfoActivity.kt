@@ -12,12 +12,12 @@ class BattleitemInfoActivity : AppCompatActivity() {
 
     private val viewModel: BattleitemInfoViewModel by viewModels()
     private val battleitemDataList =  arrayListOf<BattleitemData>(
-        BattleitemData("1"),
-        BattleitemData("2"),
-        BattleitemData("3"),
-        BattleitemData("4"),
-        BattleitemData("5"),
-        BattleitemData("6"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738","1"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738", "2"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738", "3"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738", "4"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738", "5"),
+        BattleitemData("https://img-api.neople.co.kr/cy/items/777e72f2cd35f2f3e3d7788abb375738", "6"),
 
     )
 
