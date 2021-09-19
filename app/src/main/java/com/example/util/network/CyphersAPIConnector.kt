@@ -281,29 +281,6 @@ public fun getTSJRanking(cyphersConnector: CyphersService){
     })
 }
 
-public fun getBattleitemInfo(cyphersConnector: CyphersService, itemName: String){
-
-    val callGetBattleitemInfo = cyphersConnector.getBattleitemInfo(itemName, BuildConfig.NeopleAPIKey)
-
-    callGetBattleitemInfo.enqueue(object : Callback<ResponseBattleitemInfo> {
-        override fun onResponse(
-            call: Call<ResponseBattleitemInfo>,
-            response: Response<ResponseBattleitemInfo>
-        ) {
-            Log.d("riba", "아이템 정보 성공 : ${response.raw()}")
-            Log.d("riba", "아이템 정보 내용물 : ${response.body()}")
-        }
-
-        override fun onFailure(
-            call: Call<ResponseBattleitemInfo>,
-            t: Throwable
-        ) {
-            Log.d("riba", "아이템 정보 실패 : $t")
-        }
-    })
-
-}
-
 public fun getBattleitemInfoDetail(cyphersConnector: CyphersService, itemId: String){
 
     val callGetBattleitemInfoDetail = cyphersConnector.getBattleitemInfoDetail(itemId, BuildConfig.NeopleAPIKey)
