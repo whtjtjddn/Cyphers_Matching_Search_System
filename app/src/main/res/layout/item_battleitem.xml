@@ -5,12 +5,13 @@
             name="data"
             type="com.example.cyphers_matching_search_system.battleitemInfo.BattleitemData" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    
+        android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/battleitemImage"
             android:layout_width="101dp"
@@ -25,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
-    
+
         <TextView
             android:id="@+id/battleitemName"
             android:layout_width="0dp"
