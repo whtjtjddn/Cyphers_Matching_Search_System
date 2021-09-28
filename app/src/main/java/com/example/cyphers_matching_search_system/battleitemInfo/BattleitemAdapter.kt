@@ -1,12 +1,15 @@
 package com.example.cyphers_matching_search_system.battleitemInfo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyphers_matching_search_system.databinding.ItemBattleitemBinding
 
-class BattleitemAdapter(val context: Context, val battleitemList: ArrayList<BattleitemData>) : RecyclerView.Adapter<BattleitemAdapter.BattleitemViewHolder>() {
+class BattleitemAdapter(val context: Context) : RecyclerView.Adapter<BattleitemAdapter.BattleitemViewHolder>() {
+
+    private var battleitemList = ArrayList<BattleitemData>()
 
     inner class BattleitemViewHolder(val binding: ItemBattleitemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(battleitemData: BattleitemData){
@@ -25,5 +28,11 @@ class BattleitemAdapter(val context: Context, val battleitemList: ArrayList<Batt
 
     override fun getItemCount(): Int {
         return battleitemList.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(data: ArrayList<BattleitemData>){
+        battleitemList = data
+        notifyDataSetChanged()
     }
 }
