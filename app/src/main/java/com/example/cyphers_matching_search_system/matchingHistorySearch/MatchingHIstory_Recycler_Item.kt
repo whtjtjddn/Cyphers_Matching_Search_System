@@ -1,0 +1,3 @@
+package com.example.cyphers_matching_search_system.matchingHistorySearch
+
+data class MatchingHIstory_Recycler_Item(val name:String)

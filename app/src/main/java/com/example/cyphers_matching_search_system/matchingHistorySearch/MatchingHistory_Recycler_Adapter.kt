@@ -5,26 +5,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyphers_matching_search_system.R
+import com.example.cyphers_matching_search_system.databinding.MatchingViewItemBinding
 
 class MatchingHistory_Recycler_Adapter : RecyclerView.Adapter<MatchingHistory_Recycler_Adapter.MyViewHolder>() {
 
-    inner class MyViewHolder constructor(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.matching_view_item, parent, false)
-    ){
-        var re1 = itemView.findViewById<View>(R.id.first)
-        var re2 = itemView.findViewById<View>(R.id.second)
-    }
+    var MatchingHistory_listData = mutableListOf<MatchingHIstory_Recycler_Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(parent)
+
+        val binding = MatchingViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false);
+        return MyViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val member = MatchingHistory_listData[position]
+        holder.setData(member)
     }
 
     override fun getItemCount(): Int {
-        Log.e("datasize", "" + data.value!!.size)
-        return data.value!!.size
+        return MatchingHistory_listData.size
     }
+
+    class MyViewHolder(val binding: MatchingViewItemBinding) : RecyclerView.ViewHolder(binding.root){
+        fun setData(member: MatchingHIstory_Recycler_Item){
+            binding.first.text = member.name
+        }
+
 }

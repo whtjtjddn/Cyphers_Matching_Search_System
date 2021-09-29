@@ -37,7 +37,9 @@ class MatchingHistorySearchViewModel: ViewModel() {
         ) { _, t ->
             run { _playerGrade.set("error:" + t.message) }
         }
+
     }
+
 
 
 }
