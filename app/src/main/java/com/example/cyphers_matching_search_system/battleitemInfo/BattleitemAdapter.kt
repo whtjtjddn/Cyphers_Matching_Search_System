@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyphers_matching_search_system.databinding.ItemBattleitemBinding
 
-class BattleitemAdapter(val context: Context) : RecyclerView.Adapter<BattleitemAdapter.BattleitemViewHolder>() {
+class BattleitemAdapter(val context: Context, val itemClick: (BattleitemData) -> Unit) : RecyclerView.Adapter<BattleitemAdapter.BattleitemViewHolder>() {
 
     private var battleitemList = ArrayList<BattleitemData>()
 
     inner class BattleitemViewHolder(val binding: ItemBattleitemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(battleitemData: BattleitemData){
             binding.data = battleitemData
+            binding.root.setOnClickListener{ itemClick(battleitemData) }
         }
     }
 

@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".battleitemInfo.BattleitemInfoActivity">
         </activity>
+        <activity android:name=".battleitemInfo.detail.BattleitemInfoDetailPopup">
+        </activity>
     </application>
 
 </manifest>
