@@ -53,10 +53,11 @@ class BattleitemInfoViewModel : ViewModel() {
     }
 
     private fun convertBattleitemData(responseBattleitemInfo: ResponseBattleitemInfo): BattleitemData {
-        val data  = BattleitemData("defaultUrl","defaultItemName")
         val defaultUrl = "https://img-api.neople.co.kr/cy/items/"
-        data.itemIamge = defaultUrl + responseBattleitemInfo.rows[0].itemId
-        data.itemName = responseBattleitemInfo.rows[0].itemName
-        return data
+        val itemImage = defaultUrl + responseBattleitemInfo.rows[0].itemId
+        val itemName = responseBattleitemInfo.rows[0].itemName
+        val itemId = responseBattleitemInfo.rows[0].itemId
+
+        return BattleitemData(itemImage, itemName, itemId)
     }
 }
