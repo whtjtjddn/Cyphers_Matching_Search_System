@@ -27,9 +27,10 @@ class MatchingHistory_Recycler_Adapter : RecyclerView.Adapter<MatchingHistory_Re
         return MatchingHistory_listData.size
     }
 
-    class MyViewHolder(val binding: MatchingViewItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun setData(member: MatchingHIstory_Recycler_Item){
+    class MyViewHolder(val binding: MatchingViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun setData(member: MatchingHIstory_Recycler_Item) {
             binding.first.text = member.name
         }
 
+    }
 }

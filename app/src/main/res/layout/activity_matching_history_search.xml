@@ -72,6 +72,7 @@
         app:layout_constraintHorizontal_bias="0.8"
         android:text="@{data._playerTier}" />
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/matching_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem ="@layout/matching_view_item"
