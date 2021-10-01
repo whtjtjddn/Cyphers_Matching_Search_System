@@ -21,8 +21,8 @@ class BattleitemInfoDetailViewModel: ViewModel() {
                 _battleitemImage.set(defaultUrl+it.itemId)
                 _battleitemName.set(it.itemName)
                 _battleitemNameColor.set(choiceColor(it.rarityCode))
-                _battleitemExplain.set("공백")
-                _battleitemExplainDetail.set(it.explainDetail)
+                _battleitemExplain.set("${it.characterName} 전용\n${it.slotName}\n${it.rarityName}")
+                _battleitemExplainDetail.set(it.explain)
             },
             {_, t ->
                 run { _battleitemExplainDetail.set("error:" + t.message) }
@@ -39,7 +39,6 @@ class BattleitemInfoDetailViewModel: ViewModel() {
             "103" -> color = R.color.rare
             "104" -> color = R.color.unique
         }
-
         return color
     }
 
