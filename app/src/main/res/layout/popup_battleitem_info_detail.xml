@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="androidx.core.content.ContextCompat" />
         <variable
             name="data"
             type="com.example.cyphers_matching_search_system.battleitemInfo.detail.BattleitemInfoDetailViewModel" />
@@ -34,6 +35,7 @@
             android:layout_marginLeft="60dp"
             android:layout_marginTop="60dp"
             android:text="@={data._battleitemName}"
+            android:textColor="@{ContextCompat.getColor(context, data._battleitemNameColor)}"
             app:layout_constraintStart_toEndOf="@+id/battleitemImage"
             app:layout_constraintTop_toTopOf="parent" />
 
