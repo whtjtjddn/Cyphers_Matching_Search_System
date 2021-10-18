@@ -18,14 +18,14 @@ class MatchingHistorySearchViewModel: ViewModel() {
     var _playerGrade = ObservableField<String>()
     var _playerClan = ObservableField<String>()
     var _playerTier = ObservableField<String>()
-    private val data:MutableList<MatchingHIstory_Recycler_Item> = mutableListOf()
+    public var matching_data:MutableList<MatchingHIstory_Recycler_Item> = mutableListOf()
     fun search(){
         val playerNickname = _playerNickname.get().toString()
 
         repository.getPlayerInfo(playerNickname,
             {
                 _playerId = it.rows[0].playerId
-                println(it.rows.toString())},
+            },
             {_, t ->
                 run {}
             }
@@ -37,11 +37,19 @@ class MatchingHistorySearchViewModel: ViewModel() {
                 _playerClan.set("클랜명 : " + it.clanName.toString())
                 _playerGrade.set(it.grade.toString() + "급  " + it.nickname.toString())
                 _playerTier.set(it.ratingPoint.toString() + "\n\n" + it.tierName.toString())
+                //it.matches.rows[0].date
+                with(matching_data){
+                    add(MatchingHIstory_Recycler_Item(it.matches.rows[0].date.toString()))
+                }
+
             }
         ) { _, t ->
             run { _playerGrade.set("error:" + t.message) }
         }
 
+
+
+/*
         val binding = DataBindingUtil.setContentView<ActivityMatchingHistorySearchBinding>(this, R.layout.activity_matching_history_search)
 
         with(data){
@@ -50,9 +58,6 @@ class MatchingHistorySearchViewModel: ViewModel() {
             add(MatchingHIstory_Recycler_Item("Member3"))
         }
 
-        val adapter = MatchingHistory_Recycler_Adapter()
-        adapter!!.MatchingHistory_listData = data
-        binding.matchingItem.adapter = adapter
-        binding.matchingItem.layoutManager = LinearLayoutManager(this)
+        */
     }
 }

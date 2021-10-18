@@ -14,7 +14,6 @@ import com.example.cyphers_matching_search_system.main.MainActivity2
 class MatchingHistorySearchActivity : AppCompatActivity() {
 
     private val viewModel: MatchingHistorySearchViewModel by viewModels()
-    private val data:MutableList<MatchingHIstory_Recycler_Item> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -27,6 +26,10 @@ class MatchingHistorySearchActivity : AppCompatActivity() {
         //adapter.notifyDataSetChange() refresh 하는 코드
         binding.data = viewModel
 
+        val adapter = MatchingHistory_Recycler_Adapter()
+        adapter!!.MatchingHistory_listData = viewModel.matching_data
+        binding.matchingItem.adapter = adapter
+        binding.matchingItem.layoutManager = LinearLayoutManager(this)
     }
 
 }
