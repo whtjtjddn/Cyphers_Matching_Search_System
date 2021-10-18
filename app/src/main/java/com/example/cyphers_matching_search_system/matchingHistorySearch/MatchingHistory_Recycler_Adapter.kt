@@ -27,6 +27,12 @@ class MatchingHistory_Recycler_Adapter : RecyclerView.Adapter<MatchingHistory_Re
         return MatchingHistory_listData.size
     }
 
+    fun updateReceiptsList(newlist: MutableList<MatchingHIstory_Recycler_Item>) {
+        MatchingHistory_listData.clear()
+        MatchingHistory_listData.addAll(newlist)
+        this.notifyDataSetChanged()
+
+    }
     class MyViewHolder(val binding: MatchingViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setData(member: MatchingHIstory_Recycler_Item) {
             binding.first.text = member.name

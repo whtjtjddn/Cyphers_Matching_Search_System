@@ -26,8 +26,7 @@ class MatchingHistorySearchActivity : AppCompatActivity() {
         //adapter.notifyDataSetChange() refresh 하는 코드
         binding.data = viewModel
 
-        val adapter = MatchingHistory_Recycler_Adapter()
-        adapter!!.MatchingHistory_listData = viewModel.matching_data
+        val adapter = viewModel.adapter
         binding.matchingItem.adapter = adapter
         binding.matchingItem.layoutManager = LinearLayoutManager(this)
     }

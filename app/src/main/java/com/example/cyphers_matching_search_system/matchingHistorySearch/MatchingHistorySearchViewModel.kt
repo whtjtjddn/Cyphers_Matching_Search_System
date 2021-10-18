@@ -18,7 +18,8 @@ class MatchingHistorySearchViewModel: ViewModel() {
     var _playerGrade = ObservableField<String>()
     var _playerClan = ObservableField<String>()
     var _playerTier = ObservableField<String>()
-    public var matching_data:MutableList<MatchingHIstory_Recycler_Item> = mutableListOf()
+    var matching_data:MutableList<MatchingHIstory_Recycler_Item> = mutableListOf()
+    val adapter = MatchingHistory_Recycler_Adapter()
     fun search(){
         val playerNickname = _playerNickname.get().toString()
 
@@ -38,10 +39,21 @@ class MatchingHistorySearchViewModel: ViewModel() {
                 _playerGrade.set(it.grade.toString() + "급  " + it.nickname.toString())
                 _playerTier.set(it.ratingPoint.toString() + "\n\n" + it.tierName.toString())
                 //it.matches.rows[0].date
-                with(matching_data){
-                    add(MatchingHIstory_Recycler_Item(it.matches.rows[0].date.toString()))
+                if(matching_data.isEmpty()) {
+                    for (row in it.matches.rows) {
+                        var date = row.date
+                        matching_data.add(MatchingHIstory_Recycler_Item(date.toString()))
+                    }
                 }
-
+                else{
+                    matching_data.clear()
+                    for (row in it.matches.rows) {
+                        var date = row.date
+                        matching_data.add(MatchingHIstory_Recycler_Item(date.toString()))
+                    }
+                }
+                adapter.notifyDataSetChanged()
+                adapter!!.MatchingHistory_listData = matching_data
             }
         ) { _, t ->
             run { _playerGrade.set("error:" + t.message) }
